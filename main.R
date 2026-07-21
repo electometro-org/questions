@@ -301,28 +301,55 @@ ggsave(
 #   Q18: Se necesita una constituyente
 # -----------------------------------------------------------------------------
 
-# Human-readable labels keyed by column name
 question_labels <- c(
+  "topic_1_weighted"  = "Q1: Castigo de criminales",
+  "topic_2_weighted"  = "Q2: Educación sexual integral",
   "topic_3_weighted"  = "Q3: Veto de por vida por corrupción",
   "topic_5_weighted"  = "Q5: Aborto en caso de violación",
-  "topic_7_weighted"  = "Q7: Pena de muerte en el Perú",
+  "topic_6_weighted"  = "Q6: Sistema tributario progresivo",
+  "topic_7_weighted"  = "Q7: Pena de muerte",
+  "topic_9_weighted"  = "Q9: Fomento de salud privada",
   "topic_10_weighted" = "Q10: Deportación de personas con situación migratoria irregular",
+  "topic_11_weighted" = "Q10: Veto de pueblos indigenas",
+  "topic_13_weighted" = "Q13: Inversion extranjera",
+  "topic_14_weighted" = "Q14: Reducir gasto estatal",
+  "topic_15_weighted" = "Q15: Fomento de las AFP",
   "topic_16_weighted" = "Q16: Reconocer autoridad de la CIDH",
-  "topic_18_weighted" = "Q18: Se necesita una constituyente"
+  "topic_17_weighted" = "Q17: Reducir impuestos para reducir informalidad",
+  "topic_18_weighted" = "Q18: Se necesita una constituyente",
+  "topic_19_weighted" = "Q19: Reconocer matrimonio igualitario",
+  "topic_20_weighted" = "Q20: Prohibición de la reelección parlamentaria"
 )
 
 # Compute overall means, pivot to long format, and attach labels
 df_overall_summary <- df %>%
   summarize(
+    topic_1_weighted  = mean(topic_1_weighted,  na.rm = TRUE),
+    topic_2_weighted  = mean(topic_2_weighted,  na.rm = TRUE),
     topic_3_weighted  = mean(topic_3_weighted,  na.rm = TRUE),
     topic_5_weighted  = mean(topic_5_weighted,  na.rm = TRUE),
+    topic_6_weighted  = mean(topic_6_weighted,  na.rm = TRUE),
     topic_7_weighted  = mean(topic_7_weighted,  na.rm = TRUE),
+    topic_9_weighted  = mean(topic_9_weighted,  na.rm = TRUE),
     topic_10_weighted = mean(topic_10_weighted, na.rm = TRUE),
+    topic_11_weighted = mean(topic_11_weighted, na.rm = TRUE),
+    topic_13_weighted = mean(topic_13_weighted, na.rm = TRUE),
+    topic_14_weighted = mean(topic_14_weighted, na.rm = TRUE),
+    topic_15_weighted = mean(topic_15_weighted, na.rm = TRUE),
     topic_16_weighted = mean(topic_16_weighted, na.rm = TRUE),
-    topic_18_weighted = mean(topic_18_weighted, na.rm = TRUE)
+    topic_17_weighted = mean(topic_17_weighted, na.rm = TRUE),
+    topic_18_weighted = mean(topic_18_weighted, na.rm = TRUE),
+    topic_19_weighted = mean(topic_19_weighted, na.rm = TRUE),
+    topic_20_weighted = mean(topic_20_weighted, na.rm = TRUE)
   ) %>%
-  pivot_longer(cols = everything(), names_to = "Question_ID", values_to = "mean_consensus") %>%
-  mutate(Question_Text = question_labels[Question_ID])
+  pivot_longer(
+    cols = everything(),
+    names_to = "Question_ID",
+    values_to = "mean_consensus"
+  ) %>%
+  mutate(
+    Question_Text = unname(question_labels[Question_ID])
+  )
 
 # Print to console for quick inspection
 print(df_overall_summary)
