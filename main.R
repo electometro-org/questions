@@ -55,8 +55,8 @@ original_length <- nrow(df)
 cat("Number of rows:", nrow(df))
 
 # --- Drop rows where ALL four demographic fields are simultaneously NA ---
-demo_cols <- c("gender", "region", "education", "age")
-df <- df[rowSums(is.na(df[demo_cols])) < length(demo_cols), ]
+# demo_cols <- c("gender", "region", "education", "age")
+# df <- df[rowSums(is.na(df[demo_cols])) < length(demo_cols), ]
 
 # --- Remove predicted/imputed columns ---
 df <- df[, !colnames(df) %in% c(
